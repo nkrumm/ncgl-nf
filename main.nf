@@ -35,8 +35,8 @@ process run_task {
     outputs/snakemake_config.json
 
 
-  RUN_KEY_ROOT="test-run-key"
-
+  export RUN_KEY_ROOT="test-run-key"
+  
   # run analysis
   snakemake -s /usr/local/bin/Snakefile \
     --cores ${task.cpus} \
