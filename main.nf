@@ -1,9 +1,5 @@
 
-
-params.assay = 'cdl'
-
-def sample_id = "20-10508-1"
-def input_libraries = "s3://uwlm-personal/nkrumm/NCGL/200925_NB502000_0429_AHFGKCAFX2/${sample_id}/unknown/"
+def input_libraries = "s3://uwlm-personal/nkrumm/NCGL/200925_NB502000_0429_AHFGKCAFX2/${params.sample}/unknown/"
 
 def reference_tree = params.assays[params.assay].reference
 def input_params = params.assays[params.assay].pipeline_params
