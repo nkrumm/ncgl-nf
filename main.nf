@@ -40,8 +40,8 @@ process run_task {
   # run analysis
   snakemake -s /usr/local/bin/Snakefile \
     --cores ${task.cpus} \
-    --resources mem_mb=${task.memory} \
-    --config maxthreads=${task.cpus} memory=${task.memory}
+    --resources mem_mb=${task.memory.toMega()} \
+    --config maxthreads=${task.cpus} memory=${task.memory.toMega()}
   
   """
 
