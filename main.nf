@@ -30,18 +30,18 @@ process run_task {
   touch /outputs/test.out
 
   # configure inputs
-  # python /usr/local/bin/prep_analysis.py \
-    # /cpdx/snakemake_preconfig.json \
-    # outputs/snakemake_config.json
+  python /usr/local/bin/prep_analysis.py \
+    /cpdx/snakemake_preconfig.json \
+    outputs/snakemake_config.json
 
 
   RUN_KEY_ROOT="test-run-key"
 
   # run analysis
-  # snakemake -s /usr/local/bin/Snakefile \
-    # --cores ${task.cpus} \
-    # --resources mem_mb=${task.memory} \
-    # --config maxthreads=${task.cpus} memory=${task.memory}
+  snakemake -s /usr/local/bin/Snakefile \
+    --cores ${task.cpus} \
+    --resources mem_mb=${task.memory} \
+    --config maxthreads=${task.cpus} memory=${task.memory}
   
   """
 
