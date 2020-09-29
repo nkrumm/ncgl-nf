@@ -16,7 +16,7 @@ process run_task {
   output:
     path("outputs/*") into output_ch
 
-  publishDir "s3://uwlm-personal/nkrumm/NCGL/outputs/${sample_id}/"
+  publishDir "s3://uwlm-personal/nkrumm/NCGL/outputs/${params.sample}/"
 
   script:
 
