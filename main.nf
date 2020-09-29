@@ -17,7 +17,7 @@ process run_task {
     path("outputs/*") into output_ch
 
   // publish, but drop the "outputs/" prefix
-  publishDir path: "s3://uwlm-personal/nkrumm/NCGL/outputs/${params.sample}/", saveAs: {f -> f.tokenize("/").drop(1).join("/")}
+  publishDir "${output_base}/${sample}/", mode: 'copy', overwrite: 'true', saveAs: {f -> f.tokenize("/").drop(1).join("/")}
 
   script:
 
