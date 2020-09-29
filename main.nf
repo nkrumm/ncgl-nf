@@ -19,7 +19,7 @@ process run_task {
   label "pipeline"
 
   input:
-    val(sample), path fastqs, stageAs: "inputs/libraries" from sample_ch
+    tuple val(sample), path(fastqs, stageAs: "inputs/libraries") from sample_ch
     path params, stageAs: "inputs/params.json" from input_params
     path references, stageAs: "references" from reference_tree
 
