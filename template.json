@@ -9,11 +9,23 @@
             "default": "cdl",
             "title": "",
             "type": "string"
+        },
+        "sample_base": {
+            "default": "s3://ncgl-prod.sample-bucket",
+            "title": "Base S3 path to sample FASTQs",
+            "type": "string"
+        },
+        "output_base": {
+            "default": "s3://uwlm-personal/nkrumm/cdl_baseline/output",
+            "title": "Base S3 path for output",
+            "type": "string"
         }
     },
     "required": [
         "samples", 
-        "assay"
+        "assay",
+        "sample_base",
+        "output_base"
     ],
     "type": "object"
 }

@@ -2,8 +2,9 @@
 def reference_tree = params.assays[params.assay].reference
 def input_params = params.assays[params.assay].pipeline_params
 
-def sample_base = "s3://uwlm-personal/nkrumm/NCGL/200925_NB502000_0429_AHFGKCAFX2"
-def output_base = "s3://uwlm-personal/nkrumm/NCGL/outputs"
+def sample_base = params.sample_base
+def output_base = params.output_base
+
 
 // split by command and/or space(s) and remove any remaining nulls
 def samples = params.samples.split(/[,\ ]+/) - null
@@ -11,7 +12,7 @@ println("Total samples: " + samples.size())
 println("Samples: " + samples.join(", "))
 
 sample_ch = Channel.from(samples).map {
-  s -> [s, "${sample_base}/${s}/unknown/"]
+  s -> [s, "${sample_base}/${s}/cdl/libraries/"]
 }
 
 process run_task {

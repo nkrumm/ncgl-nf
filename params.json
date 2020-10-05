@@ -1,4 +1,6 @@
 {
 	"samples": "20-10508-1",
-	"assay": "cdl"
+	"assay": "cdl",
+	"sample_base": "s3://ncgl-prod.sample-bucket",
+	"output_base": "s3://uwlm-personal/nkrumm/cdl_baseline/output"
 }
