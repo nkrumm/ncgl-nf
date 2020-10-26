@@ -23,9 +23,9 @@ Channel.from(samples).map {
 // }
 
 
-process run_cdl {
+process run_pipeline {
   echo true
-  label "cdl_pipeline"
+  label "pipeline"
   container container_hash
   input:
     tuple val(sample), path(fastqs, stageAs: "inputs/libraries") from sample_ch
