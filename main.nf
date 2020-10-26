@@ -1,7 +1,8 @@
 
 def reference_tree = params.assays[params.assay].reference
 def input_params = params.assays[params.assay].pipeline_params
-
+def assay_type = params.assays[params.assay].assay_type
+def container_hash = params.assays[params.assay].container
 def sample_base = params.sample_base
 def output_base = params.output_base
 
@@ -11,14 +12,21 @@ def samples = params.samples.split(/[,\ ]+/) - null
 println("Total samples: " + samples.size())
 println("Samples: " + samples.join(", "))
 
-sample_ch = Channel.from(samples).map {
-  s -> [s, "${sample_base}/${s}/cdl/libraries/"]
-}
+Channel.from(samples).map {
+  s -> [s, "${sample_base}/${s}/${assay_type}/libraries/"]
+}.set { sample_ch }
 
-process run_task {
+
+// branch {
+  // cdl: assay_type == "cdl"
+  // exome: assay_type == "exome"
+// }
+
+
+process run_cdl {
   echo true
-  label "pipeline"
-
+  label "cdl_pipeline"
+  container container_hash
   input:
     tuple val(sample), path(fastqs, stageAs: "inputs/libraries") from sample_ch
     path params, stageAs: "inputs/params.json" from input_params
