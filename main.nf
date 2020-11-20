@@ -8,38 +8,25 @@ def output_base = params.output_base
 
 
 // split by command and/or space(s) and remove any remaining nulls
-// def samples = params.samples.split(/[,\ ]+/) - null
+def samples = params.samples.split(/[,\ ]+/) - null
 
-def samples = [
-  ["20-10580-1", "20-10580-1-630865-retracted"],
-  ["20-10583-1", "20-10583-1-630865-retracted"],
-  ["20-10588-1", "20-10588-1-630865-retracted"],
-  ["20-10597-1", "20-10597-1-630865-retracted"],
-  ["20-10598-1", "20-10598-1-630865-retracted"],
-  ["20-10599-1", "20-10599-1-630865-retracted"],
-  ["20-10603-1", "20-10603-1-630865-retracted"],
-  ["20-10605-1", "20-10605-1-630865-retracted"],
-  ["20-10606-1", "20-10606-1-630865-retracted"],
-  ["20-10611-1", "20-10611-1-630865-retracted"],
-  ["20-10612-1", "20-10612-1-630865-retracted"]
-]
 
 println("Total samples: " + samples.size())
 println("Samples: " + samples.join(", "))
 
-//Channel.from(samples).map {
-  //s -> [s, "${sample_base}/${s}/${assay_type}/libraries/"]
-//}.set { sample_ch }
-
 Channel.from(samples).map {
-  s -> 
-    if (s.size == 1){
-      return [s[0], "${sample_base}/${s[0]}/${assay_type}/libraries/"]
-    }
-    else  {
-      return [s[0], "${sample_base}/${s[0]}/${assay_type}/libraries/${s[1]}"]
-    }
-}.view().set { sample_ch }
+  s -> [s, "${sample_base}/${s}/${assay_type}/libraries/"]
+}.set { sample_ch }
+
+//Channel.from(samples).map {
+  //s -> 
+    //if (s.size == 1){
+      //return [s[0], "${sample_base}/${s[0]}/${assay_type}/libraries/"]
+    //}
+    //else  {
+      //return [s[0], "${sample_base}/${s[0]}/${assay_type}/libraries/${s[1]}"]
+    //}
+//}.view().set { sample_ch }
 
 process run_pipeline {
   echo true
