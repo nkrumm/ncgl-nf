@@ -39,9 +39,9 @@ process run_pipeline {
 
   """
   # download input libraries; note this is compatible with restored files
-  pip install awscli
+  pip install --quiet awscli
   mkdir -p inputs/libraries
-  aws s3 cp --recursive --force-glacier ${fastq_path} inputs/libraries
+  aws s3 cp --recursive --force-glacier --only-show-errors ${fastq_path} inputs/libraries
 
   # set up directory structure as expected by snakemake file
   # necessary as we can't stage into directories at the root ('/') directly
