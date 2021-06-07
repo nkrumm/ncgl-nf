@@ -18,22 +18,14 @@ Channel.from(samples).map {
   s -> [s, "${sample_base}/${s}/${assay_type}/libraries/"]
 }.set { sample_ch }
 
-//Channel.from(samples).map {
-  //s -> 
-    //if (s.size == 1){
-      //return [s[0], "${sample_base}/${s[0]}/${assay_type}/libraries/"]
-    //}
-    //else  {
-      //return [s[0], "${sample_base}/${s[0]}/${assay_type}/libraries/${s[1]}"]
-    //}
-//}.view().set { sample_ch }
 
 process run_pipeline {
   echo true
   label "pipeline"
   container container_hash
   input:
-    tuple val(sample), path(fastqs, stageAs: "inputs/libraries") from sample_ch
+    // tuple val(sample), path(fastqs, stageAs: "inputs/libraries") from sample_ch
+    tuple val(sample), val(fastq_path) from sample_ch
     path params, stageAs: "inputs/params.json" from input_params
     path references, stageAs: "references" from reference_tree
 
@@ -46,6 +38,10 @@ process run_pipeline {
   script:
 
   """
+  # download input libraries; note this is compatible with restored files
+  mkdir -p inputs/libraries
+  aws s3 cp --recursive --force-glacier ${fastq_path} inputs/libraries
+
   # set up directory structure as expected by snakemake file
   # necessary as we can't stage into directories at the root ('/') directly
   ln -s `pwd`/inputs /inputs
