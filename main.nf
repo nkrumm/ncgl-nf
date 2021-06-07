@@ -39,6 +39,7 @@ process run_pipeline {
 
   """
   # download input libraries; note this is compatible with restored files
+  pip install awscli
   mkdir -p inputs/libraries
   aws s3 cp --recursive --force-glacier ${fastq_path} inputs/libraries
 
