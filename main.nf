@@ -39,7 +39,10 @@ process run_pipeline {
 
   """
   # download input libraries; note this is compatible with restored files
-  pip install --quiet awscli
+  curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+  unzip awscliv2.zip
+  sudo ./aws/install
+  
   mkdir -p inputs/libraries
   aws s3 cp --recursive --force-glacier --only-show-errors ${fastq_path} inputs/libraries
 
