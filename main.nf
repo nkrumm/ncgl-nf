@@ -33,10 +33,10 @@ process run_pipeline {
     path("outputs/*") into output_ch
 
   // publish, but drop the "outputs/" prefix
-  publishDir "${output_base}/${sample}/", mode: 'copy', overwrite: 'true', saveAs: {f -> f.tokenize("/").drop(1).join("/")}
+  publishDir "${output_base}/${sample}/${assay_type}/analyses/${uuid}/output/", mode: 'copy', overwrite: 'true', saveAs: {f -> f.tokenize("/").drop(1).join("/")}
 
   script:
-
+  def uuid = UUID.randomUUID().toString()
   """
   # download input libraries; note this is compatible with restored files
   curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
@@ -53,15 +53,13 @@ process run_pipeline {
 
   mkdir outputs && ln -s `pwd`/outputs /outputs
   
-  touch /outputs/test.out
-
   # configure inputs
   python /usr/local/bin/prep_analysis.py \
     /cpdx/snakemake_preconfig.json \
     outputs/snakemake_config.json
 
 
-  export RUN_KEY_ROOT="test-run-key"
+  export RUN_KEY_ROOT="${sample}/${assay_type}/analyses/${uuid}/"
 
   # run analysis
   snakemake -s /usr/local/bin/Snakefile \
