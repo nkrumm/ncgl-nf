@@ -15,7 +15,7 @@ println("Total samples: " + samples.size())
 println("Samples: " + samples.join(", "))
 
 Channel.from(samples).map {
-  s -> [s, "${sample_base}/${s}/${assay_type}/libraries/"]
+  s -> [s, UUID.randomUUID().toString(), "${sample_base}/${s}/${assay_type}/libraries/"]
 }.set { sample_ch }
 
 
@@ -25,7 +25,7 @@ process run_pipeline {
   container container_hash
   input:
     // tuple val(sample), path(fastqs, stageAs: "inputs/libraries") from sample_ch
-    tuple val(sample), val(fastq_path) from sample_ch
+    tuple val(sample), val(uuid), val(fastq_path) from sample_ch
     path params, stageAs: "inputs/params.json" from input_params
     path references, stageAs: "references" from reference_tree
 
@@ -36,7 +36,6 @@ process run_pipeline {
   publishDir "${output_base}/${sample}/${assay_type}/analyses/${uuid}/output/", mode: 'copy', overwrite: 'true', saveAs: {f -> f.tokenize("/").drop(1).join("/")}
 
   script:
-  def uuid = UUID.randomUUID().toString()
   """
   # download input libraries; note this is compatible with restored files
   wget --quiet "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -O "awscliv2.zip"
