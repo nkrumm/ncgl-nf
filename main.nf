@@ -39,9 +39,9 @@ process run_pipeline {
   def uuid = UUID.randomUUID().toString()
   """
   # download input libraries; note this is compatible with restored files
-  curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-  unzip awscliv2.zip
-  sudo ./aws/install
+  wget --quiet "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -O "awscliv2.zip"
+  unzip -qq awscliv2.zip
+  sudo ./aws/install || ./aws/install
   
   mkdir -p inputs/libraries
   aws s3 cp --recursive --force-glacier --only-show-errors ${fastq_path} inputs/libraries
