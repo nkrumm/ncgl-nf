@@ -53,7 +53,7 @@ process run_pipeline {
 
   // publish, but drop the "outputs/" prefix
   publishDir "${output_base}/${sample}/${assay_type}/analyses/${uuid}/output/", mode: 'copy', overwrite: 'true', saveAs: {f -> f.tokenize("/").drop(1).join("/")}
-  publishDir "${output_base}/${sample}/${assay_type}/analyses/${uuid}/", pattern: "params.json" mode: 'copy', overwrite: 'true', saveAs: { f -> "params.json"}
+  publishDir "${output_base}/${sample}/${assay_type}/analyses/${uuid}/", pattern: "params.json", mode: 'copy', overwrite: 'true', saveAs: { f -> "params.json"}
   
   script:
   """
