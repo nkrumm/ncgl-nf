@@ -1,13 +1,22 @@
 {
     "properties": {
         "samples": {
-            "default": "20-10508-1",
+            "default": "",
             "title": "Sample IDs (comma or space separated)",
             "type": "string"
         },
         "assay": {
-            "default": "cdl",
-            "title": "",
+            
+        },
+        "assay": {
+            "default": "exome",
+            "title": "Assay to run",
+            "type": "string",
+            "enum": ["exome", "cdl", "exome-panel", "neurodegenerative-nanoxome"]
+        },
+        "gene_list": {
+            "default": "",
+            "title": "Gene list (required if assay is exome-panel)",
             "type": "string"
         },
         "sample_base": {
@@ -16,7 +25,7 @@
             "type": "string"
         },
         "output_base": {
-            "default": "s3://uwlm-personal/nkrumm/cdl_baseline/output",
+            "default": "s3://ncgl-prod.sample-bucket",
             "title": "Base S3 path for output",
             "type": "string"
         }
