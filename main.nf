@@ -13,16 +13,16 @@ def output_base = params.output_base.replaceAll('[/]*$', '')
 
 // set up params file (target file + optional gene list)
 def input_params;
-if (assay_type == "cdl") {
+if (params.assay == "cdl") {
   def jsonSlurper = new JsonSlurper()
   String paramsJSON = new File("params/cdl.params.json").text
   input_params = jsonSlurper.parseText(paramsJSON)
-} else if (assay_type == "exome") {
+} else if (params.assay == "exome") {
   input_params = ["target": "target.bed", "genelist": []]
-} else if (assay_type == "exome-panel") {
+} else if (params.assay == "exome-panel") {
   def genelist = params.gene_list.split(/[,\ ]+/) - null
   input_params = ["target": "target.bed", "genelist": genelist]
-} else if (assay_type == "exome-pod") {
+} else if (params.assay == "exome-pod") {
   def result = PodUtils.getPodGenes(params.gene_list)
   def genelist = result["genes"].collect{ it['approved-symbol'] }
   input_params = ["target": "target.bed", "genelist": genelist]
