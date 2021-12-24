@@ -12,11 +12,11 @@
             "default": "exome",
             "title": "Assay to run",
             "type": "string",
-            "enum": ["exome", "cdl", "exome-panel", "neurodegenerative-nanoxome"]
+            "enum": ["exome", "cdl", "exome-panel", "exome-pod", "neurodegenerative-nanoxome"]
         },
         "gene_list": {
             "default": "",
-            "title": "Gene list (required if assay is exome-panel)",
+            "title": "Gene list or POD code (required if assay is exome-panel or exome-pod)",
             "type": "string"
         },
         "sample_base": {

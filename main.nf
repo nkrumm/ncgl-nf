@@ -1,11 +1,14 @@
 import groovy.json.JsonSlurper
 import groovy.json.JsonOutput
 
+import static utils.PodUtils
+
 def reference_tree = params.assays[params.assay].reference
 def assay_type = params.assays[params.assay].assay_type
 def container_hash = params.assays[params.assay].container
 def sample_base = params.sample_base.replaceAll('[/]*$', '')
 def output_base = params.output_base.replaceAll('[/]*$', '')
+
 
 
 // set up params file (target file + optional gene list)
@@ -18,6 +21,10 @@ if (assay_type == "cdl") {
   input_params = ["target": "target.bed", "genelist": []]
 } else if (assay_type == "exome-panel") {
   def genelist = params.gene_list.split(/[,\ ]+/) - null
+  input_params = ["target": "target.bed", "genelist": genelist]
+} else if (assay_type == "exome-pod") {
+  def result = PodUtils.getPodGenes(params.gene_list)
+  def genelist = result["genes"].collect{ it['approved-symbol'] }
   input_params = ["target": "target.bed", "genelist": genelist]
 }
 
