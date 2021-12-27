@@ -85,7 +85,7 @@ process run_pipeline {
   snakemake -s /usr/local/bin/Snakefile \
     --cores ${task.cpus} \
     --resources mem_mb=${task.memory.toMega()} \
-    --config maxthreads=${task.cpus} memory=${task.memory.toMega()}
+    --config maxthreads=${task.cpus} memory=${task.memory.toMega()} mfree=${task.memory.toMega()} \
   
   """
 
