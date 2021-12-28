@@ -69,6 +69,7 @@ Channel.from(samples).map {
 process run_pipeline {
   echo true
   label "pipeline"
+  errorStrategy 'ignore'
   container container_hash
   input:
     tuple val(sample), val(uuid), val(fastq_path), val(inparams), val(setup_commands), val(cleanup_commands) from sample_ch
