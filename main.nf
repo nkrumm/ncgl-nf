@@ -56,7 +56,14 @@ println("Total samples: " + samples.size())
 println("Samples: " + samples.join(", "))
 
 Channel.from(samples).map {
-  s -> [s, UUID.randomUUID().toString(), "${sample_base}/${s}/${assay_type}/libraries/", input_params_json]
+  s -> [
+    s, 
+    UUID.randomUUID().toString(), 
+    "${sample_base}/${s}/${assay_type}/libraries/", 
+    input_params_json,
+    setup_commands,
+    cleanup_commands
+  ]
 }.set { sample_ch }
 
 process run_pipeline {
@@ -64,10 +71,8 @@ process run_pipeline {
   label "pipeline"
   container container_hash
   input:
-    tuple val(sample), val(uuid), val(fastq_path), val(inparams) from sample_ch
+    tuple val(sample), val(uuid), val(fastq_path), val(inparams), val(setup_commands), val(cleanup_commands) from sample_ch
     path references, stageAs: "references" from reference_tree
-    val(setup_commands)
-    val(cleanup_commands)
   output:
     path("outputs/*") into output_ch
     path("inputs/params.json")
