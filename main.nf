@@ -91,7 +91,7 @@ process run_pipeline {
   # necessary as we can't stage into directories at the root ('/') directly
   mkdir -p inputs/libraries && ln -s `pwd`/inputs /inputs
   mkdir outputs && ln -s `pwd`/outputs /outputs
-  ln -s /data/references /references
+  ln -s `pwd`/references /references
   
   # download input libraries; note this is compatible with restored files
   aws s3 cp --recursive --force-glacier --only-show-errors ${fastq_path} inputs/libraries
