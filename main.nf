@@ -34,8 +34,8 @@ if (params.assay == "cdl") {
 } else if (params.assay == "neurodegenerative-nanoxome"){
   input_params = ["target": "nd_nanoxome_v1.3.1.exome_ref.bed", "genelist": []]
   setup_commands = [
-    "cp /data/references/dbNSFP.txt.gz /outputs/tmp.dbNSFP.txt.gz",
-    "cp /data/references/dbNSFP.txt.gz.tbi /outputs/tmp.dbNSFP.txt.gz.tbi"
+    "cp references/dbNSFP.txt.gz /outputs/tmp.dbNSFP.txt.gz",
+    "cp references/dbNSFP.txt.gz.tbi /outputs/tmp.dbNSFP.txt.gz.tbi"
   ]
   cleanup_commands = [
     "rm -f /outputs/tmp.dbNSFP.txt.gz || true",
