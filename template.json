@@ -12,7 +12,7 @@
             "default": "exome",
             "title": "Assay to run",
             "type": "string",
-            "enum": ["exome", "cdl", "exome-panel", "exome-pod", "neurodegenerative-nanoxome"]
+            "enum": ["exome", "cdl", "exome-panel", "exome-pod", "neurodegenerative-nanoxome", "exome-no-manta-no-phase"]
         },
         "gene_list": {
             "default": "",
