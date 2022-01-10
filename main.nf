@@ -22,7 +22,7 @@ if (params.assay == "cdl") {
   def jsonSlurper = new JsonSlurper()
   String paramsJSON = new File("$workflow.projectDir/params/cdl.params.json").text
   input_params = jsonSlurper.parseText(paramsJSON)
-} else if (params.assay == "exome") {
+} else if (params.assay == ["exome", "exome-no-manta-no-phase"]) {
   input_params = ["target": "target.bed", "genelist": []]
 } else if (params.assay == "exome-panel") {
   def genelist = params.gene_list.split(/[,\ ]+/) - null
