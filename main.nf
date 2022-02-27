@@ -31,7 +31,7 @@ if (params.assay == "cdl") {
   def result = PodUtils.getPodGenes(params.gene_list)
   def genelist = result["genes"].collect{ it['approved-symbol'] }
   input_params = ["target": "target.bed", "genelist": genelist]
-} else if (params.assay == "neurodegenerative-nanoxome"){
+} else if (params.assay in ["neurodegenerative-nanoxome", "neurodegenerative-nanoxome-latest"]){
   input_params = ["target": "nd_nanoxome_v1.3.1.exome_ref.bed", "genelist": []]
   setup_commands = [
     "cp references/dbNSFP.txt.gz /outputs/tmp.dbNSFP.txt.gz",
